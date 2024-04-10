@@ -1,53 +1,163 @@
-#include<stdio.h>
-#define MAX 100
-void Nhap(int a[MAX][MAX], int &n, int &m){
+#include <stdio.h>
+#define MAX 1000
+void Nhap(float a[MAX][MAX], int &n, int &m){
     do{
-        printf("Nhap n: ");
-        scanf("%d", &n);
-        printf("Nhap m: ");
-        scanf("%d", &m);
-    }while(!(n>=2 && n<=10 && m>=2 && m<=10));
+        printf("Nhap so dong: "); scanf("%d", &n);
+        printf("Nhap so cot: "); scanf("%d", &m);
+    }while(!(n>=2 && n<=50 && m>=2 && m<=50));
     for(int i=0; i<n; i++)
     for(int j=0; j<m; j++){
         printf("a[%d][%d] = ", i, j);
-        scanf("%d", &a[i][j]);
+        scanf("%f", &a[i][j]);
     }
 }
-void Xuat(int a[MAX][MAX], int n, int m){
+void Xuat(float a[MAX][MAX], int n, int m){
     for(int i=0; i<n; i++){
     for(int j=0; j<m; j++){
-            printf("%3d", a[i][j]);
-       
-        }   
-        printf("\n");
+        printf("%.2f ", a[i][j]);
+        }
+            printf("\n");
     }
 }
-int KT_phantu(int a[MAX][MAX], int n, int m, int x){
-    int dem=0;
+int TK_PhanTu(float a[MAX][MAX], int n, int m, float x){
     for(int i=0; i<n; i++)
     for(int j=0; j<m; j++){
         if(a[i][j]==x)
-        dem++;
+        return 1;
     }
-    return dem;
+    return 0;
 }
-int KT_Dongchan_PTduong(int a[MAX][MAX], int n, int m){
-    for(int i=0; i<n; i+=2)
-    for(int j=0; j<n; j++){
-        if(a[i][j]<0)
+int KT_snt(int n){
+    int dem=0;
+    if(n<2)
+    return 0;
+    for(int i=1; i<=n; i++){
+    if(n%i==0)
+    dem++;
+    }
+    if(dem==2)
+    return 1;
+    else return 0;
+}
+int KT_MaTranSNT(float a[MAX][MAX], int n, int m){
+    for(int i=0; i<n; i++)
+    for(int j=0; j<m; j++){
+        if(KT_snt(a[i][j])==0)
         return 0;
     }
     return 1;
 }
+float TongDong(float a[MAX][MAX], int m, int d){
+    float tong=0;
+    for(int j=0; j<m; j++){
+    tong+=a[d][j];
+    }
+    return tong;
+}
+float TongCot(float a[MAX][MAX], int n, int c){
+    float tong=0;
+    for(int i=0; i<n; i++){
+        tong+=a[i][c];
+    }
+    return tong;
+}
+float TongMaTran(float a[MAX][MAX], int n, int m){
+    float tong=0;
+    for(int i=0; i<n; i++)
+    for(int j=0; j<m; j++){
+        tong+=a[i][j];
+    }
+    return tong;
+}
+float TongDCChinh(float a[MAX][MAX], int n){
+    float tong=0;
+    for(int i=0; i<n; i++){
+        tong+=a[i][i];
+    }
+    return tong;
+}
+float TrenDCChinh(float a[MAX][MAX], int n, int m){
+    float tong=0;
+    for(int i=0; i<n; i++)
+    for(int j=0; j<m; j++){
+        if(i<j)
+        tong+=a[i][j];
+    }
+    return tong;
+}
+float DuoiDCChinh(float a[MAX][MAX], int n, int m){
+    float tong=0;
+    for(int i=0; i<n ;i++)
+    for(int j=0; j<m; j++){
+        if(i>j)
+        tong+=a[i][j];
+    }
+    return tong;
+}
+float TongDCPhu(float a[MAX][MAX], int n, int m){
+    float tong=0;
+    for(int i=0; i<n; i++)
+    for(int j=0; j<m; j++){
+        if(i+j==n-1)
+        tong+=a[i][j];
+    }
+    return tong;
+}
+float TrenDCPhu(float a[MAX][MAX], int n, int m){
+    float tong=0;
+    for(int i=0; i<n; i++)
+    for(int j=0; j<m; j++){
+        if(i+j<n-1)
+        tong+=a[i][j];
+    }
+    return tong;
+}
+float DuoiDCPhu(float a[MAX][MAX], int n, int m){
+    float tong=0; 
+    for(int i=0; i<n; i++)
+    for(int j=0; j<m; j++){
+        if(i+j>n-1)
+        tong+=a[i][j];
+    }
+    return tong;
+}
+int TimMax(float a[MAX][MAX], int n, int m){
+    int Max=a[0][0];
+    for(int i=0; i<n; i++)
+    for(int j=0; j<m; j++){
+        if(a[i][j]>Max)
+        Max=a[i][j];
+    }
+    return Max;
+}
 int main(){
-    int a[MAX][MAX], n, m, x;
+    int n, m, d, c;
+    float a[MAX][MAX], x;
     Nhap(a,n,m);
-    printf("Ma tran vua nhap: \n");
+    printf("Ma tran vua nhap la: \n");
     Xuat(a,n,m);
-    printf("\nNhap x: ");
-    scanf("%d", &x);
-    printf("\nCo tat ca %d phan tu x trong ma tran", KT_phantu(a,n,m,x));
-    if(KT_Dongchan_PTduong(a,n,m)==0)
-    printf("\nMa tran khong chua tat ca phan tu duong tren dong chan!");
-    else printf("\nMa tran chua tat ca phan tu duong tren dong chan!");
+    printf("Nhap x: "); 
+    scanf("%f", &x);
+    if(TK_PhanTu(a,n,m,x))
+    printf("\nTrong ma tran co chua phan tu x!");
+    else printf("\nTrong ma tran khong co chua phan tu x!");
+    KT_MaTranSNT(a,n,m);
+    if(KT_MaTranSNT(a,n,m))
+    printf("\nMa tran chua hoan toan so nguyen to!");
+    else printf("\nMa tran khong chua hoan toan so nguyen to!");
+    printf("\nNhap dong tinh tong: ");
+    scanf("%d", &d);
+    printf("Nhap cot tinh tong: ");
+    scanf("%d", &c);
+    printf("Tong Dong %d = %.2f", d, TongDong(a,m,d));
+    printf("\nTong Cot %d = %.2f", c, TongCot(a,n,c));
+    printf("\nTong Ma Tran = %.2f", TongMaTran(a,n,m));
+    printf("\nTong duong cheo chinh = %.2f", TongDCChinh(a,n));
+    printf("\nTong tren duong cheo chinh = %.2f", TrenDCChinh(a,n,m));
+    printf("\nTong duoi duong cheo chinh = %.2f", DuoiDCChinh(a,n,m));
+    printf("\nTong duong cheo phu = %.2f", TongDCPhu(a,n,m));
+    printf("\nTong tren duong cheo phu = %.2f", TrenDCPhu(a,n,m));
+    printf("\nTong duoi duong cheo phu = %.2f", DuoiDCPhu(a,n,m));
+    printf("\nPhan tu lon nhat trong ma tran la: %.2f", TimMax(a,n,m));
+    return 0;
 }
