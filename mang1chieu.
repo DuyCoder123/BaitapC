@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 100
+int a[MAX], n;
+void Nhap(int a[MAX], int &n){
+    int dempt=0;
+    do{
+        printf("Nhap n: ");
+        scanf("%d", &n);
+        dempt++;
+    }while(n!=0);
+    n=dempt;
+    for(int i=0; i<n; i++){
+        printf("a[%d] = ", i);
+        scanf("%d", &a[i]);
+    }
+}
+void Xuat(int a[MAX], int n){
+    for(int i=0; i<n; i++){
+        printf("%d ", a[i]);
+    }
+}
+void hoanvi(int &x, int &y){
+    int temp=x;
+    x=y;
+    y=temp;
+}
+void Sapxeptangdan(int a[MAX], int n){
+    for(int i=0; i<n-1; i++){
+        for(int j=i+1; j<n; j++){
+            if(abs(a[i])>abs(a[j]))
+            hoanvi(a[i],a[j]);
+        }
+    }
+    printf("\nMang sau khi sap xep tang dan khong phan biet dau: ");
+    Xuat(a,n);
+}
+void Demtansuat(int a[MAX], int n){
+    int k[MAX]={0};
+    for(int i=0; i<n; i++){
+        if(k[i]==0){
+            int dem=1;
+            for(int j=i+1; j<n; j++){
+                if(a[i]==a[j]){
+                dem++;
+                k[j]=1;
+                }
+            }
+            printf("\nPhan tu %d xuat hien %d lan" , a[i], dem); 
+        }
+    }
+}
+void Inmintrongday(int a[MAX], int n){
+    int min=a[0];
+    int max=a[0];
+    for(int i=0; i<n; i++){
+        if(min>a[i]){
+        min=a[i];
+        }
+        if(max<a[i]){
+            max=a[i];        }
+    }
+    int j=0;
+    for(int i=0; i<n; i++){
+        if(a[i]==min){
+            min++;
+            i=0;
+        }
+    }
+    if(min==max+1){
+        printf("Khong co so nho nhat vang mat trong day!");
+    }
+    else{
+        printf("So nho nhat vang mat trong day la: %d", min);
+    }
+}
+int main(){
+    Nhap(a,n);
+    printf("Mang vua nhap: \n");
+    Xuat(a,n);
+    Sapxeptangdan(a,n);
+    Demtansuat(a,n);
+    printf("\n");
+    Inmintrongday(a,n);
+    return 0;
+}
