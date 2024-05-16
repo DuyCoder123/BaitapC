@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX 100
+void LEFT(char s[MAX], int hum_char){
+	for(int i=0; i<hum_char; i++){
+		printf("%c", s[i]);
+	}
+}
+void DemNAthuong(char s[MAX]){
+	int dem=0;
+	char nguyenam[]="ueoai";
+	for(int i=0; i<strlen(s); i++){
+		for(int j=0; j<strlen(nguyenam); j++){
+			if(s[i]==nguyenam[j]){
+			s[i]=s[i]-32;
+			dem++;
+			}
+		}
+	}
+	printf("\nSo luong nguyen am thuong la %d", dem);
+	printf("\n%s", s);
+}
+void XoaTu(char s[MAX]){
+	int dem=0;
+	int j=0;
+	while(s[j]!='\0'){
+		if(s[j]==' ')
+		dem++;
+		j++;
+	}
+	int cnt=0;
+	for(int i=0; i<strlen(s); i++){
+		if(s[i]!=' '){
+			printf("%c", s[i]);
+			
+		}
+		else{
+			cnt++;
+			printf(" ");
+			if(dem-cnt==1){
+				break;
+			}
+		}
+	}
+}
+int main(){
+	char s[MAX];
+	int hum_char;
+	printf("Nhap vao mot chuoi: ");
+	gets(s);
+	printf("Chuoi vua nhap la: %s", s);
+	printf("\nNhap do dai: ");
+	scanf("%d", &hum_char);
+	LEFT(s,hum_char);
+	DemNAthuong(s);
+	printf("\n");
+	XoaTu(s);
+	return 0;
+}
