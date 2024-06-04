@@ -305,7 +305,7 @@ void Sapxeptang(int b[], int n){
         }
     }
 }
-void Sapxeptang(int a[][max], int n, int m){
+void Sapxeptang1(int a[][max], int n, int m){
     for(int i=0; i<n; i++){
         int b[max]={0}, dem=0;
         for(int j=0; j<m; j++){
@@ -327,7 +327,7 @@ void Sapxepgiam(int b[], int n){
         }
     }
 }
-void Sapxepgiam(int a[][max], int n, int m){
+void Sapxepgiam1(int a[][max], int n, int m){
     for(int i=0; i<n; i++){
         int b[max]={0}, dem=0;
         for(int j=0; j<m; j++){
@@ -339,6 +339,88 @@ void Sapxepgiam(int a[][max], int n, int m){
         }
     }
     printf("Ma tran sau khi sap xep giam dan cac hang: \n");
+    Xuat(a,n,m);
+}
+void Sxepmatrantang(int a[][max], int n, int m){
+    printf("Ma tran sau khi sap xep tang dan: \n");
+    int b[max*max];
+    int dem=0;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            b[dem++]=a[i][j];
+        }
+    }
+    Sapxeptang(b,dem);
+    dem=0;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            a[i][j]=b[dem++];
+        }
+    }
+    Xuat(a,n,m);
+}
+void Sxepmatrangiam(int a[][max], int n, int m){
+    printf("Ma tran sau khi sap xep giam dan: \n");
+    int b[max];
+    int dem=0;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            b[dem++]=a[i][j];
+        }
+    }
+    Sapxepgiam(b,dem);
+    dem=0;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            a[i][j]=b[dem++];
+        }
+    }
+    Xuat(a,n,m);
+}
+void KT_dongtangdan(int a[][max], int n, int m){
+    int d;
+    int b[max], dem=0;
+    printf("Nhap dong muon kiem tra co tang dan: ");
+    scanf("%d", &d);
+    for(int j=0; j<m-1; j++){
+        if(a[d][j]>a[d][j+1]){
+            printf("Dong %d khong tang \n", d);
+            printf("Dong %d sau khi thay doi: \n", d);
+            for(int i=0; i<m; i++){
+                b[dem++]=a[d][i];
+            }
+            Sapxeptang(b,dem);
+            for(int p=0; p<dem; p++){
+                a[d][p]=b[p];
+            }
+            break;
+        }
+    }
+    if(dem==0)
+    printf("Dong %d tang dan!\n", d);
+    Xuat(a,n,m);
+}
+void KT_cotgiamdan(int a[][max], int n, int m){
+    int b[max], dem=0;
+    int c;
+    printf("Nhap cot muon kiem tra giam dan: \n");
+    scanf("%d", &c);
+    for(int i=0; i<n-1; i++){
+        if(a[i][c]<a[i+1][c]){
+            printf("Cot %d khong giam dan: \n", c);
+            printf("Cot %d sau khi thay the: \n", c);
+            for(int j=0; j<n; j++){
+                b[dem++]=a[j][c];
+            }
+            Sapxepgiam(b,dem);
+            for(int p=0; p<dem; p++){
+                a[p][c]=b[p];
+            }
+            break;
+        }
+    }
+    if(dem==0)
+    printf("Cot %d giam dan!\n", c);
     Xuat(a,n,m);
 }
 int main(){
@@ -367,7 +449,11 @@ int main(){
     TimcotchuanhieuSNT(a,n,m);
     HoanVi2Dong(a,n,m);
     HoanVi2Cot(a,n,m);
-    Sapxeptang(a,n,m);
-    Sapxepgiam(a,n,m);
+    Sapxeptang1(a,n,m);
+    Sapxepgiam1(a,n,m);
+    Sxepmatrantang(a,n,m);
+    Sxepmatrangiam(a,n,m);
+    KT_dongtangdan(a,n,m);
+    KT_cotgiamdan(a,n,m);
     return 0;
 }
